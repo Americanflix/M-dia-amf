@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ping MixDrop</title>
+</head>
+<body style="background:black; color:lime; font-family:monospace; font-size:48px; text-align:center; margin-top:20%;">
+
+  <!-- Texto que aparece quando tudo for carregado -->
+  <div id="ok" style="visibility:hidden;">✅ OK</div>
+
+  <!-- Container invisível para os vídeos -->
+  <div id="videos" style="position:absolute; width:0; height:0; overflow:hidden;"></div>
+
+  <script>
+    const links = [
+      "https://mixdrop.co/f/AAAAAAAAA/video1.mp4",
+      "https://mixdrop.co/f/BBBBBBBBB/video2.mp4",
+      "https://mixdrop.co/f/CCCCCCCCC/video3.mp4",
+      "https://mixdrop.co/f/DDDDDDDDD/video4.mp4",
+      "https://mixdrop.co/f/EEEEEEEEE/video5.mp4",
+      "https://mixdrop.co/f/FFFFFFFFF/video6.mp4",
+      "https://mixdrop.co/f/GGGGGGGGG/video7.mp4",
+      "https://mixdrop.co/f/HHHHHHHHH/video8.mp4",
+      "https://mixdrop.co/f/IIIIIIIII/video9.mp4",
+      "https://mixdrop.co/f/JJJJJJJJJ/video10.mp4"
+    ];
+
+    let loadedCount = 0;
+    const total = links.length;
+    const container = document.getElementById('videos');
+
+    links.forEach((src) => {
+      const video = document.createElement('video');
+      video.autoplay = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      video.style.width = "0";
+      video.style.height = "0";
+
+      const source = document.createElement('source');
+      source.src = src;
+      source.type = "video/mp4";
+
+      video.appendChild(source);
+      container.appendChild(video);
+
+      video.onloadeddata = () => {
+        loadedCount++;
+        if (loadedCount === total) {
+          document.getElementById('ok').style.visibility = 'visible';
+        }
+      };
+
+      video.load();
+    });
+  </script>
+
+</body>
+</html>
